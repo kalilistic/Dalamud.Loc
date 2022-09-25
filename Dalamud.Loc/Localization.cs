@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 
 using Dalamud.Loc.Attributes;
@@ -15,10 +16,10 @@ namespace Dalamud.Loc;
 /// <inheritdoc/>
 public class Localization : ILocalization
 {
-    private readonly DalamudPluginInterface pluginInterface;
-
     // ReSharper disable once CollectionNeverQueried.Local
     private readonly Dictionary<Language, Dictionary<string, string>> strings = new ();
+    private readonly DalamudPluginInterface pluginInterface;
+    private readonly HttpClient httpClient;
     private readonly Dictionary<string, Language> languageCodes = new ();
     private Language currentLanguage;
 
@@ -26,10 +27,13 @@ public class Localization : ILocalization
     /// Initializes a new instance of the <see cref="Localization"/> class.
     /// </summary>
     /// <param name="pluginInterface">Dalamud plugin interface.</param>
-    public Localization(DalamudPluginInterface pluginInterface)
+    /// <param name="httpClient">httpClient (will init if not passed).</param>
+    public Localization(DalamudPluginInterface pluginInterface, HttpClient? httpClient = null)
     {
         this.pluginInterface = pluginInterface;
         this.pluginInterface.LanguageChanged += this.LanguageChanged;
+
+        this.httpClient = httpClient ?? new HttpClient();
 
         foreach (Language language in Enum.GetValues(typeof(Language)))
         {
@@ -63,6 +67,7 @@ public class Localization : ILocalization
     public void Dispose()
     {
         this.pluginInterface.LanguageChanged -= this.LanguageChanged;
+        this.httpClient.Dispose();
     }
 
     /// <inheritdoc/>
@@ -110,6 +115,23 @@ public class Localization : ILocalization
         foreach (var kvp in resourcePaths)
         {
             var jsonString = Assembly.GetCallingAssembly().GetResourceContent(kvp.Item2);
+            this.LoadLanguage(kvp.Item1, jsonString);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguageFromUrl(Language language, string url)
+    {
+        var jsonString = this.httpClient.GetStringAsync(url).Result;
+        this.LoadStrings(jsonString, language);
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguagesFromUrls(IEnumerable<Tuple<Language, string>> urls)
+    {
+        foreach (var kvp in urls)
+        {
+            var jsonString = this.httpClient.GetStringAsync(kvp.Item2).Result;
             this.LoadLanguage(kvp.Item1, jsonString);
         }
     }

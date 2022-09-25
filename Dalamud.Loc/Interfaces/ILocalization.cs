@@ -65,6 +65,19 @@ public interface ILocalization
     void LoadLanguagesFromAssembly(IEnumerable<Tuple<Language, string>> resourcePaths);
 
     /// <summary>
+    /// Loads language from url, deserializing json and adding to available languages.
+    /// </summary>
+    /// <param name="language">Language code.</param>
+    /// <param name="url">URL with json content.</param>
+    void LoadLanguageFromUrl(Language language, string url);
+
+    /// <summary>
+    /// Loads languages from urls, deserializing json and adding to available languages.
+    /// </summary>
+    /// <param name="urls">URLs with json content.</param>
+    void LoadLanguagesFromUrls(IEnumerable<Tuple<Language, string>> urls);
+
+    /// <summary>
     /// Gets string by key in target language.
     /// </summary>
     /// <param name="key">String key.</param>
