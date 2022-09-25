@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Dalamud.Loc.Enums;
 using Xunit;
 
@@ -51,6 +51,15 @@ namespace Dalamud.Loc.Test
         {
             var loc = new Localization();
             loc.LoadLanguage(Language.French, SampleJson);
+            loc.CurrentLanguage = Language.French;
+            Assert.Equal("Key Value", loc.GetString("MyKey1"));
+        }
+
+        [Fact]
+        public void ShouldLoadLanguages()
+        {
+            var loc = new Localization();
+            loc.LoadLanguages(new List<Tuple<Language, string>> { new(Language.French, SampleJson) });
             loc.CurrentLanguage = Language.French;
             Assert.Equal("Key Value", loc.GetString("MyKey1"));
         }
