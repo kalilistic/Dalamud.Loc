@@ -11,9 +11,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Set VERSION variable from tag
-      run: |
-        echo "VERSION=${$env:GITHUB_REF/refs\/tags\/v/}" >> $env:GITHUB_ENV
-        echo $env:VERSION
+      run: echo VERSION=$env:GITHUB_REF/refs\/tags\/v/} >> $env:GITHUB_ENV
     - name: Download Dalamud
       run: |
         Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
@@ -25,4 +23,5 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=$env:VERSION --no-build --output .
     - name: Push
-      run: dotnet nuget push Dalamud.Loc.${$env:VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push Dalamud.Loc.$env:VERSION.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+          
