@@ -8,6 +8,7 @@
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IsPackable>false</IsPackable>
+		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
@@ -36,8 +37,9 @@
 	  <ProjectReference Include="..\Dalamud.Loc\Dalamud.Loc.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Reference Include="Dalamud">
-	    <HintPath>C:\Users\kal\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
-	  </Reference>
+		<Reference Include="Dalamud">
+			<HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 	</ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<Title>Dalamud.Loc</Title>
 		<Authors>kalilistic, SheepGoMeh</Authors>
-		<Description>A dynamic configuration library to use with .net projects.</Description>
+		<Description>Localization library for dalamud plugins.</Description>
 		<RepositoryUrl>https://github.com/kalilistic/Dalamud.Loc</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
