@@ -18,11 +18,11 @@ jobs:
         mkdir -p ~/Dalamud
         unzip latest.zip -d ~/Dalamud
     - name: Build
-      run: dotnet build --configuration Release /p:Version=${VERSION} /p:IsCI=true
+      run: dotnet build --configuration Release /p:Version=${VERSION} -p:IsCI=true
     - name: Test
-      run: dotnet test --configuration Release /p:Version=${VERSION} /p:IsCI=true --no-build
+      run: dotnet test --configuration Release /p:Version=${VERSION} -p:IsCI=true --no-build
     - name: Pack
-      run: dotnet pack --configuration Release /p:Version=${VERSION} /p:IsCI=true --no-build --output .
+      run: dotnet pack --configuration Release /p:Version=${VERSION} -p:IsCI=true --no-build --output .
     - name: Push
       run: dotnet nuget push FlexConfig.${VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
       
