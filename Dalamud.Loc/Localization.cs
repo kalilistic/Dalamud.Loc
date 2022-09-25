@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 using Dalamud.Loc.Attributes;
 using Dalamud.Loc.Enums;
+using Dalamud.Loc.Extensions;
 using Dalamud.Loc.Interfaces;
 using Dalamud.Plugin;
 using Newtonsoft.Json;
@@ -74,6 +77,40 @@ public class Localization : ILocalization
         foreach (var kvp in keyedJsonStrings)
         {
             this.LoadLanguage(kvp.Item1, kvp.Item2);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguageFromFile(Language language, string filePath)
+    {
+        var jsonString = File.ReadAllText(filePath);
+        this.LoadStrings(jsonString, language);
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguagesFromFiles(IEnumerable<Tuple<Language, string>> languageFilePaths)
+    {
+        foreach (var kvp in languageFilePaths)
+        {
+            var jsonString = File.ReadAllText(kvp.Item2);
+            this.LoadLanguage(kvp.Item1, jsonString);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguageFromAssembly(Language language, string resourcePath)
+    {
+        var jsonString = Assembly.GetCallingAssembly().GetResourceContent(resourcePath);
+        this.LoadStrings(jsonString, language);
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguagesFromAssembly(IEnumerable<Tuple<Language, string>> resourcePaths)
+    {
+        foreach (var kvp in resourcePaths)
+        {
+            var jsonString = Assembly.GetCallingAssembly().GetResourceContent(kvp.Item2);
+            this.LoadLanguage(kvp.Item1, jsonString);
         }
     }
 
