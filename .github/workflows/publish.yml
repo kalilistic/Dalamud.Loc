@@ -15,16 +15,17 @@ jobs:
         git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
         git branch --remote --contains | grep origin/master
     - name: Set VERSION variable from tag
-      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      run: echo "VERSION=${$env:GITHUB_REF/refs\/tags\/v/}" >> $env:GITHUB_ENV
+      run: echo $env:VERSION
     - name: Download Dalamud
       run: |
         Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
         Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
     - name: Build
-      run: dotnet build --configuration Release /p:Version=${VERSION}
+      run: dotnet build --configuration Release /p:Version=${$env:VERSION}
     - name: Test
-      run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
+      run: dotnet test --configuration Release /p:Version=${$env:VERSION} --no-build
     - name: Pack
-      run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
+      run: dotnet pack --configuration Release /p:Version=${$env:VERSION} --no-build --output .
     - name: Push
-      run: dotnet nuget push Dalamud.Loc.${VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push Dalamud.Loc.${$env:VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
