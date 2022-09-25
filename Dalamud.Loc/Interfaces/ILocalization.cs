@@ -37,4 +37,19 @@ public interface ILocalization
     /// </summary>
     /// <param name="keyedJsonStrings">Tuples with language key and json strings for language.</param>
     void LoadLanguages(IEnumerable<Tuple<Language, string>> keyedJsonStrings);
+
+    /// <summary>
+    /// Gets string by key in target language.
+    /// </summary>
+    /// <param name="key">String key.</param>
+    /// <param name="language">Language to return string.</param>
+    /// <returns>translated string.</returns>
+    string GetString(string key, Language language);
+
+    /// <summary>
+    /// Gets string by key in current language.
+    /// </summary>
+    /// <param name="key">String key.</param>
+    /// <returns>translated string.</returns>
+    string GetString(string key);
 }

@@ -13,6 +13,8 @@ namespace Dalamud.Loc;
 public class Localization : ILocalization
 {
     private readonly DalamudPluginInterface pluginInterface;
+
+    // ReSharper disable once CollectionNeverQueried.Local
     private readonly Dictionary<Language, Dictionary<string, string>> strings = new ();
     private readonly Dictionary<string, Language> languageCodes = new ();
     private Language currentLanguage;
@@ -74,6 +76,12 @@ public class Localization : ILocalization
             this.LoadLanguage(kvp.Item1, kvp.Item2);
         }
     }
+
+    /// <inheritdoc/>
+    public string GetString(string key, Language language) => this.strings[language].ContainsKey(key) ? this.strings[language][key] : key;
+
+    /// <inheritdoc/>
+    public string GetString(string key) => this.strings[this.currentLanguage].ContainsKey(key) ? this.strings[this.currentLanguage][key] : key;
 
     private void LoadStrings(string jsonString, Language language)
     {
