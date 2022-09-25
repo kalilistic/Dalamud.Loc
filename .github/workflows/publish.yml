@@ -14,15 +14,14 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
     - name: Download Dalamud
       run: |
-        curl https://goatcorp.github.io/dalamud-distrib/latest.zip --output latest.zip
-        mkdir -p ~/Dalamud
-        unzip latest.zip -d ~/Dalamud
+        curl -o latest.zip https://goatcorp.github.io/dalamud-distrib/latest.zip
+        unzip latest.zip -d ~/dalamud/
     - name: Build
-      run: dotnet build --configuration Release /p:Version=${VERSION} -p:IsCI=true
+      run: dotnet build --configuration Release -p:IsCI=true /p:Version=${VERSION}
     - name: Test
-      run: dotnet test --configuration Release /p:Version=${VERSION} -p:IsCI=true --no-build
+      run: dotnet test --configuration Release -p:IsCI=true /p:Version=${VERSION} --no-build
     - name: Pack
-      run: dotnet pack --configuration Release /p:Version=${VERSION} -p:IsCI=true --no-build --output .
+      run: dotnet pack --configuration Release -p:IsCI=true /p:Version=${VERSION} --no-build --output .
     - name: Push
       run: dotnet nuget push FlexConfig.${VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
       
