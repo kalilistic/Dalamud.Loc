@@ -14,8 +14,13 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 		<NoWarn>IDE0003,CS0464,CS8618,CS1591</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsCI)' == 'true'">
+		<DalamudLibPath>$(HOME)/dalamud</DalamudLibPath>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
@@ -35,10 +40,10 @@
 		<WarningLevel>4</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="..\icon.png" Pack="true" PackagePath="" />
+		<None Include="..\icon.png" Pack="true" PackagePath=""/>
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="stylecop.json" />
+		<None Remove="stylecop.json"/>
 		<AdditionalFiles Include="..\stylecop.json">
 			<Link>stylecop.json</Link>
 		</AdditionalFiles>
