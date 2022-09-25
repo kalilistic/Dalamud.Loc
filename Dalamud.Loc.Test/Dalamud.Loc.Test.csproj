@@ -35,4 +35,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Dalamud.Loc\Dalamud.Loc.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="Dalamud">
+	    <HintPath>C:\Users\kal\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 </Project>

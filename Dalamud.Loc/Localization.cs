@@ -18,7 +18,7 @@ public class Localization : ILocalization
 {
     // ReSharper disable once CollectionNeverQueried.Local
     private readonly Dictionary<Language, Dictionary<string, string>> strings = new ();
-    private readonly DalamudPluginInterface pluginInterface;
+    private readonly DalamudPluginInterface? pluginInterface;
     private readonly HttpClient httpClient;
     private readonly Dictionary<string, Language> languageCodes = new ();
     private Language currentLanguage;
@@ -28,20 +28,23 @@ public class Localization : ILocalization
     /// </summary>
     /// <param name="pluginInterface">Dalamud plugin interface.</param>
     /// <param name="httpClient">httpClient (will init if not passed).</param>
-    public Localization(DalamudPluginInterface pluginInterface, HttpClient? httpClient = null)
+    public Localization(DalamudPluginInterface? pluginInterface = null, HttpClient? httpClient = null)
     {
-        this.pluginInterface = pluginInterface;
-        this.pluginInterface.LanguageChanged += this.LanguageChanged;
+        if (pluginInterface != null)
+        {
+            this.pluginInterface = pluginInterface;
+            this.pluginInterface.LanguageChanged += this.LanguageChanged;
+        }
 
         this.httpClient = httpClient ?? new HttpClient();
 
-        foreach (Language language in Enum.GetValues(typeof(Language)))
+        foreach (Language lang in Enum.GetValues(typeof(Language)))
         {
             var type = typeof(Language);
-            var memInfo = type.GetMember(language.ToString());
+            var memInfo = type.GetMember(lang.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(LanguageCodeAttribute), false);
             var twoLetterISOCode = ((LanguageCodeAttribute)attributes[0]).TwoLetterISOCode;
-            this.languageCodes.Add(twoLetterISOCode, language);
+            this.languageCodes.Add(twoLetterISOCode, lang);
         }
     }
 
@@ -49,6 +52,7 @@ public class Localization : ILocalization
     public Language CurrentLanguage
     {
         get => this.currentLanguage;
+
         set
         {
             if (!this.AvailableLanguages.Contains(value))
@@ -66,7 +70,11 @@ public class Localization : ILocalization
     /// <inheritdoc/>
     public void Dispose()
     {
-        this.pluginInterface.LanguageChanged -= this.LanguageChanged;
+        if (this.pluginInterface != null)
+        {
+            this.pluginInterface.LanguageChanged -= this.LanguageChanged;
+        }
+
         this.httpClient.Dispose();
     }
 
