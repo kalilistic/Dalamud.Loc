@@ -14,8 +14,9 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
     - name: Download Dalamud
       run: |
-        curl -o latest.zip https://goatcorp.github.io/dalamud-distrib/latest.zip
-        unzip latest.zip -d ~/dalamud/
+        curl https://goatcorp.github.io/dalamud-distrib/latest.zip --output latest.zip
+        mkdir -p ~/Dalamud
+        unzip latest.zip -d ~/Dalamud
     - name: Build
       run: dotnet build --configuration Release -p:IsCI=true /p:Version=${VERSION}
     - name: Test

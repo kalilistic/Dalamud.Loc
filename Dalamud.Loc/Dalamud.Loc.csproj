@@ -20,7 +20,7 @@
 		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(IsCI)' == 'true'">
-		<DalamudLibPath>$(HOME)/dalamud</DalamudLibPath>
+		<DalamudLibPath>/home/runner/Dalamud/</DalamudLibPath>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
