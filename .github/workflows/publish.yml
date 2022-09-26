@@ -24,7 +24,7 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
     - name: Push
-      run: dotnet nuget push FlexConfig.${VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push Dalamud.Loc.${VERSION}.nupkg --skip-duplicate --no-symbols --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
       
       
       
