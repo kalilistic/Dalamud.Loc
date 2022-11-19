@@ -9,6 +9,7 @@ using Dalamud.Loc.Enums;
 using Dalamud.Loc.Extensions;
 using Dalamud.Loc.Interfaces;
 using Dalamud.Plugin;
+using Dalamud.Utility;
 using Newtonsoft.Json;
 
 namespace Dalamud.Loc;
@@ -124,6 +125,23 @@ public class Localization : ILocalization
         {
             var jsonString = Assembly.GetCallingAssembly().GetResourceContent(kvp.Item2);
             this.LoadLanguage(kvp.Item1, jsonString);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void LoadLanguagesFromAssembly(string baseResourcePath)
+    {
+        foreach (Language lang in Enum.GetValues(typeof(Language)))
+        {
+            var type = typeof(Language);
+            var memInfo = type.GetMember(lang.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof(LanguageCodeAttribute), false);
+            var twoLetterISOCode = ((LanguageCodeAttribute)attributes[0]).TwoLetterISOCode;
+            var jsonString = Assembly.GetCallingAssembly().GetResourceContent($"{baseResourcePath}.{twoLetterISOCode}.json");
+            if (!jsonString.IsNullOrEmpty())
+            {
+                this.LoadLanguage(lang, jsonString);
+            }
         }
     }
 

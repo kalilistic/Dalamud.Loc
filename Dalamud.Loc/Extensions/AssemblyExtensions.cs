@@ -18,6 +18,11 @@ public static class AssemblyExtensions
     public static string GetResourceContent(this Assembly value, string resourcePath)
     {
         var resourceStream = value.GetManifestResourceStream(resourcePath);
+        if (resourceStream == null)
+        {
+            return string.Empty;
+        }
+
         using var reader = new StreamReader(resourceStream ?? throw new InvalidOperationException());
         var resourceContent = reader.ReadToEnd();
 
