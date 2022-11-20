@@ -41,12 +41,12 @@ loc.Dispose();
 loc.LoadLanguage(Language.French, frenchStringsJson);
 
 // load from local file
-loc.LoadLanguage(Language.French, pluginInterface.ConfigDirectory + "/loc/fr.json");
+loc.LoadLanguageFromFile(Language.French, pluginInterface.ConfigDirectory + "/loc/fr.json");
 
 // load from embedded resource
-loc.LoadLanguage(Language.French, "MyPlugin.Resource.translation.fr.json");
+loc.LoadLanguageFromAssembly(Language.French, "MyPlugin.Resource.translation.fr.json");
 
 // load from remote file
-loc.LoadLanguage(Language.French, urlToJson);
+loc.LoadLanguageFromUrl(Language.French, urlToJson);
 
 ```
