@@ -64,5 +64,32 @@ namespace Dalamud.Loc.Test
             loc.CurrentLanguage = Language.French;
             Assert.Equal("Key Value", loc.GetString("MyKey1"));
         }
+
+        [Fact]
+        public void ShouldUseFallBackIfEnabled()
+        {
+            var loc = new Localization();
+            loc.LoadLanguages(new List<Tuple<Language, string>>
+            {
+                new(Language.English, SampleJson),
+                new(Language.French, "{}"),
+            });
+            loc.CurrentLanguage = Language.French;
+            Assert.Equal("Key Value", loc.GetString("MyKey1"));
+        }
+
+        [Fact]
+        public void ShouldIgnoreFallBackIfDisabled()
+        {
+            var loc = new Localization();
+            loc.LoadLanguages(new List<Tuple<Language, string>>
+            {
+                new(Language.English, SampleJson),
+                new(Language.French, "{}"),
+            });
+            loc.CurrentLanguage = Language.French;
+            loc.UseFallbacks = false;
+            Assert.Equal("MyKey1", loc.GetString("MyKey1"));
+        }
     }
 }

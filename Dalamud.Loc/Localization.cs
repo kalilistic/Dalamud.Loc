@@ -66,6 +66,9 @@ public class Localization : ILocalization
     }
 
     /// <inheritdoc/>
+    public bool UseFallbacks { get; set; } = true;
+
+    /// <inheritdoc/>
     public List<Language> AvailableLanguages { get; } = new ();
 
     /// <inheritdoc/>
@@ -163,10 +166,23 @@ public class Localization : ILocalization
     }
 
     /// <inheritdoc/>
-    public string GetString(string key, Language language) => this.strings[language].ContainsKey(key) ? this.strings[language][key] : key;
+    public string GetString(string key, Language language)
+    {
+        var str = this.strings[language].ContainsKey(key) ? this.strings[language][key] : key;
+        if (str.Equals(key) && this.UseFallbacks && language != Language.English)
+        {
+            // ReSharper disable once TailRecursiveCall
+            return this.GetString(key, Language.English);
+        }
+
+        return str;
+    }
 
     /// <inheritdoc/>
-    public string GetString(string key) => this.strings[this.currentLanguage].ContainsKey(key) ? this.strings[this.currentLanguage][key] : key;
+    public string GetString(string key)
+    {
+        return this.GetString(key, this.currentLanguage);
+    }
 
     private void LoadStrings(string jsonString, Language language)
     {

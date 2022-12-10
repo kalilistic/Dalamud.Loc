@@ -16,6 +16,11 @@ public interface ILocalization
     Language CurrentLanguage { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether english should be used as fallback.
+    /// </summary>
+    bool UseFallbacks { get; set; }
+
+    /// <summary>
     /// Gets list of available languages with loaded localization.
     /// </summary>
     List<Language> AvailableLanguages { get; }
