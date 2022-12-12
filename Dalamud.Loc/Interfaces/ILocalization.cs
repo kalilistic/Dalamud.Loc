@@ -102,4 +102,19 @@ public interface ILocalization
     /// <param name="key">String key.</param>
     /// <returns>translated string.</returns>
     string GetString(string key);
+
+    /// <summary>
+    /// Gets strings by keys in current language.
+    /// </summary>
+    /// <param name="keys">String keys.</param>
+    /// <returns>translated strings.</returns>
+    string[] GetStrings(IEnumerable<string> keys);
+
+    /// <summary>
+    /// Gets strings by keys in target language.
+    /// </summary>
+    /// <param name="keys">String keys.</param>
+    /// <param name="language">Language to return string.</param>
+    /// <returns>translated strings.</returns>
+    string[] GetStrings(IEnumerable<string> keys, Language language);
 }

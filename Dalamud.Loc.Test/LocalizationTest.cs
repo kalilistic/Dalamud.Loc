@@ -91,5 +91,17 @@ namespace Dalamud.Loc.Test
             loc.UseFallbacks = false;
             Assert.Equal("MyKey1", loc.GetString("MyKey1"));
         }
+
+        [Fact]
+        public void ShouldTranslateMultipleKeysAtOnce()
+        {
+            var loc = new Localization();
+            loc.LoadLanguage(Language.French, SampleJson);
+            loc.CurrentLanguage = Language.French;
+            var keys = new[] { "MyKey1", "MyKey2" };
+            var values = loc.GetStrings(keys);
+            Assert.Equal("Key Value", values[0]);
+            Assert.Equal("Key Value 2", values[1]);
+        }
     }
 }

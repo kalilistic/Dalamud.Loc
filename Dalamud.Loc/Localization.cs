@@ -184,6 +184,24 @@ public class Localization : ILocalization
         return this.GetString(key, this.currentLanguage);
     }
 
+    /// <inheritdoc/>
+    public string[] GetStrings(IEnumerable<string> keys)
+    {
+        return this.GetStrings(keys, this.currentLanguage);
+    }
+
+    /// <inheritdoc/>
+    public string[] GetStrings(IEnumerable<string> keys, Language language)
+    {
+        var translated = new List<string>();
+        foreach (var key in keys)
+        {
+            translated.Add(this.GetString(key, language));
+        }
+
+        return translated.ToArray();
+    }
+
     private void LoadStrings(string jsonString, Language language)
     {
         this.AvailableLanguages.Add(language);
