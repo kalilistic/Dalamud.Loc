@@ -117,4 +117,19 @@ public interface ILocalization
     /// <param name="language">Language to return string.</param>
     /// <returns>translated strings.</returns>
     string[] GetStrings(IEnumerable<string> keys, Language language);
+
+    /// <summary>
+    /// Gets strings by keys in target language for enum.
+    /// </summary>
+    /// <typeparam name="T">Enum type.</typeparam>
+    /// <returns>translated strings.</returns>
+    string[] GetStrings<T>();
+
+    /// <summary>
+    /// Gets strings by keys in target language for enum.
+    /// </summary>
+    /// <typeparam name="T">Enum type.</typeparam>
+    /// <param name="language">Language to return string.</param>
+    /// <returns>translated strings.</returns>
+    string[] GetStrings<T>(Language language);
 }

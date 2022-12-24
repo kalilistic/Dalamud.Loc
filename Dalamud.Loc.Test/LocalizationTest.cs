@@ -10,6 +10,12 @@ namespace Dalamud.Loc.Test
     {
         private const string SampleJson = "{\r\n  \"MyKey1\": \"Key Value\",\r\n  \"MyKey2\": \"Key Value 2\"\r\n}";
 
+        private enum SampleEnum
+        {
+            MyKey1,
+            MyKey2,
+        }
+
         [Fact]
         public void ConstructorShouldNotThrowError()
         {
@@ -100,6 +106,31 @@ namespace Dalamud.Loc.Test
             loc.CurrentLanguage = Language.French;
             var keys = new[] { "MyKey1", "MyKey2" };
             var values = loc.GetStrings(keys);
+            Assert.Equal("Key Value", values[0]);
+            Assert.Equal("Key Value 2", values[1]);
+        }
+
+        [Fact]
+        public void ShouldTranslateEnumsWithCurrentLanguage()
+        {
+            var loc = new Localization();
+            loc.LoadLanguage(Language.English, SampleJson);
+            var values = loc.GetStrings<SampleEnum>();
+            Assert.Equal("Key Value", values[0]);
+            Assert.Equal("Key Value 2", values[1]);
+        }
+
+        [Fact]
+        public void ShouldTranslateEnumsWithSpecifiedLanguage()
+        {
+            var loc = new Localization();
+            loc.LoadLanguages(new List<Tuple<Language, string>>
+            {
+                new(Language.English, SampleJson),
+                new(Language.French, "{}"),
+            });
+            loc.CurrentLanguage = Language.French;
+            var values = loc.GetStrings<SampleEnum>(Language.English);
             Assert.Equal("Key Value", values[0]);
             Assert.Equal("Key Value 2", values[1]);
         }

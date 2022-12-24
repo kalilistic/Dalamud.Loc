@@ -202,6 +202,25 @@ public class Localization : ILocalization
         return translated.ToArray();
     }
 
+    /// <inheritdoc/>
+    public string[] GetStrings<T>()
+    {
+        return this.GetStrings<T>(this.currentLanguage);
+    }
+
+    /// <inheritdoc/>
+    public string[] GetStrings<T>(Language language)
+    {
+        var names = Enum.GetNames(typeof(T));
+        var localizedOptions = new List<string>();
+        foreach (var optionName in names)
+        {
+            localizedOptions.Add(this.GetString(optionName, language));
+        }
+
+        return localizedOptions.ToArray();
+    }
+
     private void LoadStrings(string jsonString, Language language)
     {
         this.AvailableLanguages.Add(language);
