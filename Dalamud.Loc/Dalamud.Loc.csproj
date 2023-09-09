@@ -6,7 +6,7 @@
 		<RepositoryUrl>https://github.com/kalilistic/Dalamud.Loc</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<LangVersion>10</LangVersion>
 		<Nullable>enable</Nullable>
