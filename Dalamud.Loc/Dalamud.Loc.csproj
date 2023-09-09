@@ -53,6 +53,11 @@
             <HintPath Condition="Exists('/home/runner/Dalamud')">/home/runner/Dalamud/Newtonsoft.Json.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="ImGui.NET">
+            <HintPath Condition="Exists('$(AppData)\XIVLauncher\addon\Hooks\dev')">$(AppData)\XIVLauncher\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+            <HintPath Condition="Exists('/home/runner/Dalamud')">/home/runner/Dalamud/ImGui.NET.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">

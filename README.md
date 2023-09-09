@@ -50,3 +50,9 @@ loc.LoadLanguageFromAssembly(Language.French, "MyPlugin.Resource.translation.fr.
 loc.LoadLanguageFromUrl(Language.French, urlToJson);
 
 ```
+
+### Using localized ImGui components
+
+```csharp
+LocGui.Text("MyStringKey");
+```
