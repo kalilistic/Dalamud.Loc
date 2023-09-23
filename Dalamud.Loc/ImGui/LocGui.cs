@@ -135,4 +135,35 @@ public static class LocGui
 
         return false;
     }
+
+    /// <summary>
+    /// Localized Checkbox.
+    /// </summary>
+    /// <param name="key">primary key.</param>
+    /// <param name="value">value to set.</param>
+    /// <returns>indicator whether checkbox changed.</returns>
+    public static bool Checkbox(string key, ref bool value)
+    {
+        if (ImGuiNET.ImGui.Checkbox(loc.GetString(key), ref value))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Localized BeginPopup.
+    /// </summary>
+    /// <param name="key">primary key.</param>
+    /// <returns>indicator whether popup is open.</returns>
+    public static bool BeginPopup(string key)
+    {
+        if (ImGuiNET.ImGui.BeginPopup(loc.GetString(key)))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
