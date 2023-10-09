@@ -166,4 +166,29 @@ public static class LocGui
 
         return false;
     }
+
+    /// <summary>
+    /// Localized BulletText.
+    /// </summary>
+    /// <param name="key">primary key.</param>
+    public static void BulletText(string key) => ImGuiNET.ImGui.BulletText(loc.GetString(key));
+
+    /// <summary>
+    /// Localized InputInt.
+    /// </summary>
+    /// <param name="key">primary key.</param>
+    /// <param name="value">value to set.</param>
+    /// <param name="step">step value.</param>
+    /// <param name="stepFast">fast step value.</param>
+    /// <param name="flags">input text flags (defaults to none).</param>
+    /// <returns>indicator whether input changed.</returns>
+    public static bool InputInt(string key, ref int value, int step = 1, int stepFast = 100, ImGuiInputTextFlags flags = ImGuiInputTextFlags.None)
+    {
+        if (ImGuiNET.ImGui.InputInt(loc.GetString(key), ref value, step, stepFast, flags))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
