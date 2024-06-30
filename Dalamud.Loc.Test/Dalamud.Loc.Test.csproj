@@ -9,6 +9,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IsPackable>false</IsPackable>
 		<NoWarn>1591</NoWarn>
+				<DalamudHome Condition=" '$(DALAMUD_HOME)' != '' ">$(DALAMUD_HOME)</DalamudHome>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220707-01" />
@@ -33,10 +34,11 @@
 		</PackageReference>
 	</ItemGroup>
    <ItemGroup>
-        <Reference Include="Dalamud">
-            <HintPath Condition="Exists('$(AppData)\XIVLauncher\addon\Hooks\dev')">$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
-            <HintPath Condition="Exists('/home/runner/Dalamud')">/home/runner/Dalamud/Dalamud.dll</HintPath>
-        </Reference>
+		<Reference Include="Dalamud">
+			<HintPath Condition=" '$(DALAMUD_HOME)' != '' AND Exists('$(DALAMUD_HOME)\Dalamud.dll')">$(DALAMUD_HOME)\Dalamud.dll</HintPath>
+			<HintPath Condition=" '$(DALAMUD_HOME)' == '' AND Exists('$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll')">$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+			<HintPath Condition=" '$(DALAMUD_HOME)' == '' AND Exists('/home/runner/Dalamud/Dalamud.dll')">/home/runner/Dalamud/Dalamud.dll</HintPath>
+		</Reference>
         <Reference Include="Newtonsoft.Json">
             <HintPath Condition="Exists('$(AppData)\XIVLauncher\addon\Hooks\dev')">$(AppData)\XIVLauncher\addon\Hooks\dev\Newtonsoft.Json.dll</HintPath>
             <HintPath Condition="Exists('/home/runner/Dalamud')">/home/runner/Dalamud/Newtonsoft.Json.dll</HintPath>

@@ -19,7 +19,7 @@ public class Localization : ILocalization
 {
     // ReSharper disable once CollectionNeverQueried.Local
     private readonly Dictionary<Language, Dictionary<string, string>> strings = new ();
-    private readonly DalamudPluginInterface? pluginInterface;
+    private readonly IDalamudPluginInterface? pluginInterface;
     private readonly HttpClient httpClient;
     private readonly Dictionary<string, Language> languageCodes = new ();
     private Language currentLanguage;
@@ -29,7 +29,7 @@ public class Localization : ILocalization
     /// </summary>
     /// <param name="pluginInterface">Dalamud plugin interface.</param>
     /// <param name="httpClient">httpClient (will init if not passed).</param>
-    public Localization(DalamudPluginInterface? pluginInterface = null, HttpClient? httpClient = null)
+    public Localization(IDalamudPluginInterface? pluginInterface = null, HttpClient? httpClient = null)
     {
         if (pluginInterface != null)
         {
